@@ -1,0 +1,469 @@
+/* ============================================================
+   style.css — Academic Clean Design (KNU CSE Style)
+   ============================================================ */
+
+:root {
+  /* 교수님 배색을 본뜬 고전적이고 신뢰감 높은 화이트/그레이 테마 */
+  --bg-main: #ffffff;
+  --bg-sub: #f8f9fa;
+  --border-color: #cccccc;
+  --text-dark: #222222;
+  --text-light: #555555;
+  --accent-color: #b91c1c;
+  /* 학술 마크 포인트용 딥 레드 */
+
+  --max-width: 960px;
+  /* 10주차 패턴 소스코드와 일치화한 안심 너비 */
+  --header-height: 60px;
+}
+
+/* ──────────────────────────────────────
+   1. 기본 베이스 및 리셋
+────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  line-height: 1.7;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ──────────────────────────────────────
+   2. 내비게이션 바 (좌측 타이틀, 우측 메뉴)
+────────────────────────────────────── */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  letter-spacing: 0.5px;
+}
+
+.nav-list {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-link {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-light);
+  padding: 6px 4px;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--accent-color);
+  font-weight: 700;
+  border-bottom: 2px solid var(--accent-color);
+}
+
+/* [추가 과제 1 반영] main.js의 overlay 작동을 위한 특수 오버레이 레이어 구성 */
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 998;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-overlay.show {
+  display: block;
+  opacity: 1;
+}
+
+/* ──────────────────────────────────────
+   3. SPA 섹션 기본 제어 구조
+────────────────────────────────────── */
+.page-section {
+  display: none;
+  min-height: 100vh;
+  padding-top: calc(var(--header-height) + 40px);
+}
+
+.page-section.active {
+  display: block;
+}
+
+.section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--text-dark);
+  padding-bottom: 8px;
+  margin-bottom: 30px;
+  letter-spacing: -0.5px;
+}
+
+/* ──────────────────────────────────────
+   4. HOME / PROFILE (교수님 사이트 매커니즘 100% 모사)
+────────────────────────────────────── */
+/* 부모 상자에 display: flow-root를 주어 float 자식 높이를 자동 계산 및 완전 포함 */
+.profile-block {
+  display: flow-root;
+  padding-top: 40px;
+}
+
+.profile-photo-area {
+  float: left;
+  width: 220px;
+  margin-right: 40px;
+  text-align: center;
+}
+
+.photo-box {
+  width: 180px;
+  height: 220px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-sub);
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 제출한 이미지의 비율 왜곡 방지 장치 */
+.photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-placeholder {
+  font-size: 70px;
+}
+
+.profile-meta-links {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+/* 우측 텍스트 본문 영역 (BFC 가동으로 float 레이아웃 수평 간섭 원천 차단) */
+.profile-text-area {
+  overflow: hidden;
+}
+
+.academic-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: var(--text-dark);
+}
+
+.academic-paragraph {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  margin-bottom: 15px;
+  text-align: justify;
+}
+
+/* ──────────────────────────────────────
+   5. PROJECTS (학술 아카이빙 리스트 스타일)
+────────────────────────────────────── */
+.academic-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.year-group {
+  border-left: 3px solid var(--border-color);
+  padding-left: 20px;
+}
+
+.year-label {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+}
+
+.academic-item {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.item-number {
+  font-weight: 700;
+  color: var(--accent-color);
+  font-size: 0.95rem;
+}
+
+.item-title {
+  font-size: 1rem;
+  color: var(--text-dark);
+}
+
+.item-desc {
+  font-size: 0.88rem;
+  color: var(--text-light);
+  margin: 4px 0 6px 0;
+}
+
+.item-tags {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #2563eb;
+  background-color: #eff6ff;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ──────────────────────────────────────
+   6. SKILLS & CONTACT
+────────────────────────────────────── */
+.skills-container {
+  background: var(--bg-sub);
+  border: 1px solid var(--border-color);
+  padding: 30px;
+  max-width: 600px;
+}
+
+.skill-row {
+  margin-bottom: 20px;
+}
+
+.skill-label {
+  font-size: 0.88rem;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.skill-bar-bg {
+  background: #dddddd;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  display: inline-block;
+  width: calc(100% - 60px);
+  vertical-align: middle;
+}
+
+.skill-fill {
+  height: 100%;
+  width: 0;
+  background: var(--text-dark);
+}
+
+.skill-fill.animate {
+  width: var(--pct);
+  transition: width 1s ease-out;
+}
+
+.skill-pct-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: inline-block;
+  width: 50px;
+  text-align: right;
+  vertical-align: middle;
+}
+
+/* 폼 디자인 */
+.contact-box {
+  max-width: 600px;
+}
+
+.contact-desc {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 20px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--text-dark);
+}
+
+.btn-submit {
+  background: var(--text-dark);
+  color: #fff;
+  padding: 10px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-submit:hover {
+  background: #444444;
+}
+
+.form-error {
+  font-size: 0.8rem;
+  color: var(--accent-color);
+}
+
+.form-success {
+  font-size: 0.85rem;
+  color: green;
+  margin-top: 10px;
+}
+
+/* ──────────────────────────────────────
+   7. 햄버거 메뉴 및 모바일 대응 (768px)
+────────────────────────────────────── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.hamburger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--text-dark);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  /* 애니메이션 트랜지션 정의 */
+}
+
+/* [추가 과제 2 반영] main.js의 active 제어와 맞물려 삼선 메뉴가 X자로 교차하는 모션 적용 */
+.hamburger.active span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.footer-inner {
+  border-top: 1px solid var(--border-color);
+  max-width: var(--max-width);
+  margin: 40px auto 0;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.footer-subtext {
+  margin-top: 4px;
+  color: #999999;
+}
+
+/* 모바일 중단점 미디어 쿼리 조정 */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .main-nav {
+    position: fixed;
+    top: var(--header-height);
+    right: -100%;
+    width: 200px;
+    height: 100vh;
+    background: #fff;
+    border-left: 1px solid var(--border-color);
+    transition: right 0.3s ease;
+    z-index: 999;
+    /* 오버러닝 방지 레이어 배치 */
+  }
+
+  .main-nav.open {
+    right: 0;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .nav-link {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+  }
+
+
+  .profile-photo-area {
+    float: none;
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+
+  .profile-text-area {
+    overflow: visible;
+    width: 100%;
+  }
+}
